@@ -5,7 +5,7 @@
 //Lab 2: Rocketship
 /*---------------------*/
 public class Rocket {
-    public static final int SIZE = 3;        /* SIZE is the class constant, if this number changes, so does the rocket's scale */
+    public static final int SIZE = 14;        /* SIZE is the class constant, if this number changes, so does the rocket's scale */
 
     public static void main(String[] args) {
         drawCone();
