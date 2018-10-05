@@ -1,24 +1,25 @@
+/*---------------------*/
 //Evan Eyring
 //10/3/18
 //AP COMP SCIENCE A
 //Lab 2: Rocketship
-//
+/*---------------------*/
 public class Rocket {
     public static final int SIZE = 3;        /* SIZE is the class constant, if this number changes, so does the rocket's scale */
 
     public static void main(String[] args) {
         drawCone();
-        drawDivide();
+        drawMiddle();
         drawTop();
-        drawBot();
-        drawDivide();
+        drawBot();                          /* Methods are summoned to create the rocket ship */
+        drawMiddle();
         drawBot();
         drawTop();
-        drawDivide();
+        drawMiddle();
         drawCone();
     }
 
-    public static void drawCone() {                                         /*Method genrates the cone through nested for loops */
+    public static void drawCone() {                                         /*Method generates the cone through nested for loops */
         for (int line = 1; line <= (SIZE * 2 - 1); line++) {
             System.out.print(" ");
             for (int space = 1; space <= (SIZE * 2 - 1) - line; space++) {
@@ -35,7 +36,7 @@ public class Rocket {
         }
     }
 
-    public static void drawDivide() {
+    public static void drawMiddle() {                                         /* Method generates the divider through a loop */
         System.out.print("+");
         for (int i = 1; i <= SIZE * 2; i++) {
             System.out.print("=*");
