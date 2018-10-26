@@ -1,4 +1,4 @@
-import java.sql.SQLOutput;
+
 
 public class DrawBoxes {
     public static void main(String[] args) {
@@ -9,17 +9,18 @@ public class DrawBoxes {
         System.out.println("Complete");
     }
 
+    public static void drawBox () {
 
-    public static void drawBox() {
-        System.out.println();
-        drawTopBottom();
-        drawSides();
-        drawSides();
-        drawTopBottom();
-        System.out.println();
+            System.out.println();
+            drawTopBottom();
+            drawSides();
+            drawSides();
+            drawTopBottom();
+            System.out.println();
+
+        }
 
 
-    }
 
     public static void drawTopBottom() {
         System.out.println("+------+");
