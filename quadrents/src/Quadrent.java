@@ -1,7 +1,7 @@
 public class Quadrent {
     public static void main(String[] args) {
         double x = -5;
-        ;
+
         double y = 5;
         System.out.println("Coords in quadrant " + getQuad(x, y));
     }
