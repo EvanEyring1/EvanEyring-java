@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*
 public class ArrayWorksheet {
     //1a)
     public static void main(String[] args) {
@@ -18,9 +17,10 @@ public class ArrayWorksheet {
             numbersArray1[i] = i * 3;
         }
         //2c
-        int[] numbersArray2 = new int[8];
-        for (int = 0; i <8; i++){
-            int[] numbersArray2 = {5, 10, 15, 20, 25};
+        int[] numbersArray2 = new int[5];
+        for (int i = 0; i < 5; i++) {
+            numbersArray2[i] = i * 2;
+            System.out.println(numbersArray2[i]);
 
         }
 
