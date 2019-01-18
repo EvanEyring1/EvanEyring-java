@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class Student {
+    private String studentName;
+    private String studentGrade;
+    private ArrayList<Double> grades;
+
+    public Student (String name, String grade) {
+        studentName = name;
+        studentGrade = grade;
+    }
+
+    public boolean passOrFailing (){
+        int total = 0;
+        for (int j = 0; j < grades.size()-1; j++){
+            total += grades.indexOf(j);
+        }
+        return (total/grades.size()>=65);
+    }
+
+    public int numberOfClasses (){
+        int classes = 0;
+        for (int i = 0; i < grades.size(); i++){
+            classes++;
+        }
+        return classes;
+    }
+
+    public String returnName(String studentName){
+        return studentName;
+
+    }
+    public int returnGrades (){
+        int total = 0;
+        for (int j = 0; j < grades.size()-1; j++){
+            total += grades.indexOf(j);
+        }
+        int average = total/grades.size();
+        return average;
+    }
+
+    public void addGrades (ArrayList grades, int newGrade) {
+        grades.add(1, newGrade);
+    }
+
+}
