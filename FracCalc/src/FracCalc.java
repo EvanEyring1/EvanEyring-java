@@ -1,110 +1,174 @@
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
-
+import java.util.*;
 public class FracCalc {
-    public static void main(String[] args) {
-        Scanner userInput = new Scanner(System.in);
-        System.out.print("Enter three terms ( if mixed numbers, format like a_b/c) or type 'quit' to exit: ");
-        String fullInput = userInput.nextLine();
-        while (!fullInput.equals("quit")) {
-            String[] terms = new String[3];
-            int x = -1;
-            //n is used to represent the amount of words we've found
-            int n = 0;
-            for (int i = 0; i < fullInput.length(); i++) {
-                x++;
-                if (fullInput.charAt(i) == ' ') {
-                    //If the part of the string that we're accessing is a space
-                    terms[n] = fullInput.substring(i - x, i);
-                    x = -1;
-                    n++;
-                    //Word count increases
-                }
-                //Once the first two words are found we can print out the rest of the string
-                if (n == 2) {
-                    terms[n] = fullInput.substring(i + 1);
-                    n++;
-                }
-            }
-            //New variables used to redefine the numerator in the case of a mixed number
-            double newNumeratorOne = parseWhole(terms[0]) * parseDenominator(terms[0]) + parseNumerator(terms[0]);
-            double newNumeratorTwo = parseWhole(terms[2]) * parseDenominator(terms[2]) + parseNumerator(terms[2]);
-            //Variables used to perform the operations by multiplying some terms together
-            double AD = newNumeratorOne * parseDenominator(terms[2]);
-            double BC = parseDenominator(terms[0]) * newNumeratorTwo;
-            double BD = parseDenominator(terms[0]) * parseDenominator(terms[2]);
-            double AC = newNumeratorOne * newNumeratorTwo;
-            double ADplusBC = AD + BC;
-            double ADminusBC = AD - BC;
 
-            //Battery of if statements that check the operator stored in terms[] and use the previous set of variables
-            //differently depending on what th operator is
-            if (terms[1].equals("+")){
-                System.out.println(ADplusBC / BD);
-            }
-            if (terms[1].equals("-")){
-                System.out.println(ADminusBC / BD);
-            }
-            if (terms[1].equals("*")){
-                System.out.println(AC / BD);
-            }
-            if (terms[1].equals("/")){
-                System.out.println(AD / BC);
-            }
+  public static void main(String[] args) {
+	  
+	  Scanner input = new Scanner(System.in);
+		
+		
+		int index = 1;
+		while(index != 0) {
+			System.out.print("Enter Terms(if mixed number format like 1_1/2");
+			 String firstPart = input.next();
+			 String secondPart = null;
+			 String thirdPart = null;
+			
+			
+			if(firstPart.equals("quit")) {
+				index = 0;
+				System.out.println("Program ended");
+			}else {
+				 secondPart = input.next();
+				 thirdPart = input.next();
+				
+				//System.out.println(firstPart);
+				//System.out.println(secondPart);
+				//System.out.println(thirdPart);
+			}
+			
+			int wholeOne = parseWhole(firstPart);
+			int wholeTwo = parseWhole(thirdPart);
+			int numeOne = parseNume(firstPart);
+			int numeTwo = parseNume(thirdPart);
+			int denomOne = parseDenom(firstPart);
+			int denomTwo = parseDenom(thirdPart);
+		
+			//System.out.print(wholeOne + " " + wholeTwo + " " + numeOne + " " + numeTwo + " "+ denomOne + " " + denomTwo);
+			
+			int bigNumeTwo;
+			int bigNumeOne;
+				
+				if(wholeOne > 0) {
+					bigNumeOne = (denomOne * wholeOne) + numeOne;
+				}else {
+					bigNumeOne = numeOne; 
+				}
+			
+				if(wholeTwo > 0) {
+					bigNumeTwo = (denomTwo * wholeTwo) + numeTwo;
+				}else {
+					bigNumeTwo = numeTwo;
+				}
+			
+		//***********************************************************************************
+				String answer = " ";
+				if(secondPart.equals("+")) {
+					answer = add(bigNumeOne, denomOne, bigNumeTwo, denomTwo);
+				}else if(secondPart.equals("-")){
+					answer = subtract(bigNumeOne, denomOne, bigNumeTwo, denomTwo);
+				}else if(secondPart.equals("*")) {
+					answer = multiply(bigNumeOne, denomOne, bigNumeTwo, denomTwo);
+				}else if(secondPart.equals("/")) {
+					answer = divide(bigNumeOne, denomOne, bigNumeTwo, denomTwo);
+				}else {
+					answer = "scooby doo";
+				}
+		//************************************************************************************
+				
+				int answerNume = Integer.parseInt(answer.substring(0, answer.indexOf("/")));
+				int answerDenom = Integer.parseInt(answer.substring(answer.indexOf("/") + 1, answer.length()));
+				
+				if(answerNume % answerDenom == 0) {
+					System.out.println(answerNume / answerDenom);
+				}else {
+					System.out.println(answer);
+				}
+				
+			
+		}
+		input.close();
+	}
+  
+  
+  public static String add(final int firstNume, final int firstDenom,
+      final int secondNume, final int secondDenom) {
+	
+	  //Need an if statement for when the denominator is the same and when it is different
+	  if(firstDenom == secondDenom) {
+		  int newNume = firstNume + secondNume; //simple math adding the numerators together
+		 return newNume + "/" + firstDenom;
+	 }else {
+		 int newNumeOne = firstNume * secondDenom; //When the denominators are different there is a different process
+		 int answerDenom = firstDenom * secondDenom; //the next three lines make a common denominator and 
+		 int newNumeTwo = secondNume * firstDenom; //add the numerator together
+		 int answerNume = newNumeOne + newNumeTwo;
+		 return answerNume + "/" + answerDenom; //returning in fraction form
+	 }
+  }
+  
+  public static String subtract(final int firstNume, final int firstDenom,
+      final int secondNume, final int secondDenom) {
+	 
+	  //need an if statement for the same reason as addition
+	  if(firstDenom == secondDenom) {
+			 int newNume = firstNume - secondNume;//Simple math subtracts the numerators
+			 return newNume + "/" + firstDenom;
+		 }else {
+			 int newNumeOne = firstNume * secondDenom; //different process for when the denominators are different
+			 int answerDenom = firstDenom * secondDenom; //next three lines make common denominator and
+			 int newNumeTwo = secondNume * firstDenom; //subtract the numerators in order
+			 int answerNume = newNumeOne - newNumeTwo;
+			 return answerNume + "/" + answerDenom; //returning in fraction form
+		 }
+  }
 
-            //Sentinel
-            System.out.print("Please enter three tokens or type 'quit' to exit: ");
-            fullInput = userInput.nextLine();
-        }
-    }
-    public static int parseWhole(String fullNumber) {
-        int j = 0;
-        for (int i = 0; i < fullNumber.length(); i++) {
-            if (fullNumber.charAt(i) == '_') {
-                return Integer.parseInt(fullNumber.substring(0, i));
-            } else if(fullNumber.charAt(i) == '/') {
-                j++;
-            }
-        }
-        if(j == 0){
-            return Integer.parseInt(fullNumber);
-        }
-        return 0;
-    }
-    public static int parseNumerator(String fullNumber){
-        int i = 0;
-        int j = 0;
-        for (int n = 0; n < fullNumber.length(); n++){
-            if (fullNumber.charAt(n) == '_'){
-                j = n;
-                i++;
-            }
-            if (fullNumber.charAt(n) == '/' && i == 1){
-                return Integer.parseInt(fullNumber.substring(j + 1, n));
-            }
-            if (fullNumber.charAt(n) == '/' && i == 0){
-                return Integer.parseInt(fullNumber.substring(j, n));
-            }
-        }
-        return 0;
-    }
-    public static int parseDenominator(String fullNumber){
-        int i = 0;
-        int j = 0;
-        for (int n = 0; n < fullNumber.length(); n++){
-            if (fullNumber.charAt(n) == '_'){
-                i++;
-            }
-            if (fullNumber.charAt(n) == '/'){
-                j++;
-                return Integer.parseInt(fullNumber.substring(n + 1));
-            }
-            if (i == 1 && j == 1){
-                return 1;
-            }
-        }
-        return 1;
-    }
+  public static String multiply(final int firstNume, final int firstDenom,
+      final int secondNume, final int secondDenom) {
+	  int newNum = firstNume * secondNume; // Simple math multiplying the numerators together
+		int newDen = firstDenom * secondDenom; //Simple math multiplying the denominators together
+		return newNum + "/" + newDen;
+  }
+  
+  public static String divide(final int firstNume, final int firstDenom,
+      final int secondNume, final int secondDenom) {
+	  int newNume = firstNume * secondDenom;//since the second fraction is switched in division
+	  int newDenom = firstDenom * secondNume;//I multiply Nume1 and den2 / nume2 and den2
+	  return newNume + "/" + newDenom;
+	  
+  }
+  
+  
+  public static int parseWhole(String input) {
+		//if the string contains an underscore it means tat what i want to parse is the number before that
+		if(input.contains("_")) {
+			int outsideNumber = Integer.parseInt(input.substring(0, input.indexOf("_"))); //parses whole number that comes before '_'
+			return outsideNumber;
+		//if the string doesn't contain a dash it means there is no fraction so the whole string is the whole number
+		}else if(!input.contains("/")) {
+			return Integer.parseInt(input); //parses whole number
+		}else {
+			return 0; //if there is no whole number it returns a 0
+		}
+	}
+	
+	public static int parseNume(String input) {
+		//if the string contains both '_' and '/' this parses the number between them
+		if(input.contains("_") && input.contains("/")) {
+			int firstNumber = Integer.parseInt(input.substring(input.indexOf("_") + 1, input.indexOf("/")));//parses "numerator"
+			return firstNumber;
+		//if there is no whole number the numerator is the first number up to the '/'
+		}else if (input.contains("/")) {
+			int firstNumber = Integer.parseInt(input.substring(0, input.indexOf("/")));//parses "numerator"
+			return firstNumber;
+		}else {
+			return 0; //if there is no '_' and '/' then the number is the answer
+		}
+		
+	}
+	
+	public static int parseDenom(String input) {
+		//if there is a fraction this parses the denominator
+		if(input.contains("/")) {
+			int lastNumber = Integer.parseInt(input.substring(input.indexOf("/") + 1, input.length()));//parses evereything after the '/'
+			return lastNumber;
+		}else {
+			return 1; //if there is no fraction the whole number is the answer
+		}
+	}
+	
+		
+	
 }
-
