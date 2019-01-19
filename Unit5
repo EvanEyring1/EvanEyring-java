@@ -1,46 +1,77 @@
 import java.util.*;
 
+import java.util.ArrayList;
+
 public class Student {
     private String studentName;
     private String studentGrade;
-    private ArrayList<Double> grades;
+    private ArrayList<Double> grades = new ArrayList<Double>();
 
-    public Student (String name, String grade) {
-        studentName = name;
-        studentGrade = grade;
+    public Student(String newStudentName, String newStudentGrade){
+        studentName = newStudentName;
+        studentGrade = newStudentGrade;
+    }
+    public String toString(){
+        return studentName + " is a " + studentGrade;
     }
 
-    public boolean passOrFailing (){
-        int total = 0;
-        for (int j = 0; j < grades.size()-1; j++){
-            total += grades.indexOf(j);
-        }
-        return (total/grades.size()>=65);
+
+    public void addGrade(double grade){
+        grades.add(grade);
     }
 
-    public int numberOfClasses (){
-        int classes = 0;
-        for (int i = 0; i < grades.size(); i++){
-            classes++;
-        }
-        return classes;
+    //Sets and retrieves name field
+    public void setStudentName(String newStudentName){
+        studentName = newStudentName;
     }
-
-    public String returnName(String studentName){
+    public String getStudentName(){
         return studentName;
-
     }
-    public int returnGrades (){
-        int total = 0;
-        for (int j = 0; j < grades.size()-1; j++){
-            total += grades.indexOf(j);
+
+    //Sets and retrieves grades field
+    public void setStudentGrade(String newStudentGrade){
+        studentGrade = newStudentGrade;
+    }
+    public String getStudentGrade(){
+        return studentGrade;
+    }
+     public boolean passingOrFailing(){
+        double totalGrade = 0;
+        for (int i = 0; i < grades.size(); i++){
+            totalGrade += grades.get(i);
         }
-        int average = total/grades.size();
-        return average;
+        double gradeAverage = totalGrade/grades.size();
+        if (gradeAverage < 65){
+            return false;
+        } else {
+            return true;
+        }
     }
+}
 
-    public void addGrades (ArrayList grades, int newGrade) {
-        grades.add(1, newGrade);
+
+//CLIENT CODE COULDNT GET THE FILES TO COMBINE IN GITHUB
+import java.util.Scanner;
+
+public class ClientCode {
+    public static void main(String[] args) {
+        Scanner userInput = new Scanner(System.in);
+        System.out.print("Student's Name?: ");
+        String studentName = userInput.next();
+        System.out.print("What grade?: ");
+        String studentGrade = userInput.next();
+        System.out.print("How many classes?: ");
+        Student myStudent = new Student(studentName, studentGrade);
+        int numberOfClasses = userInput.nextInt();
+        for (int j = 1; j <= numberOfClasses; j++){
+            System.out.print("What grade in class numeber" + i + " ?: ");
+            myStudent.addGrade(userInput.nextDouble());
+        }
+        System.out.println(myStudent);
+        if (myStudent.passingOrFailing() == true){
+            System.out.println( myStudent.getStudentName() + " is passing most of their classes.");
+        } else {
+            System.out.println( myStudent.getStudentName() + " is failing most of their classes.");
+        }
     }
-
 }
