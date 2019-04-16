@@ -1,0 +1,109 @@
+public class Card {
+
+    private String suit;
+    private String rank;
+    private int pointValue;
+//constructor
+    public Card(String cardRank, String cardSuit, int cardPointValue) {
+        suit = cardSuit;
+        rank = cardRank;
+        pointValue = cardPointValue;
+    }
+//getters
+    public String suit() { return suit; }
+    public String rank() { return rank; }
+    public int pointValue() { return pointValue; }
+//checks if the card is equal to another card
+    public boolean matches(Card otherCard) {
+        if(otherCard.suit().equals(this.suit()) && otherCard.rank().equals(this.rank()) && otherCard.pointValue() == this.pointValue())
+            return true;
+        else
+            return false;
+    }
+//toString method
+    public String toString() { return rank + " of " + suit + " (point value = " + pointValue + ")"; }
+}
+
+
+
+
+
+
+
+
+
+import java.util.ArrayList;
+import java.lang.Math;
+
+public class Deck {
+    //cards array is the deck itself, a collection of card objects
+    private ArrayList<Card> cards = new ArrayList<>();
+    private int size;
+//constructor
+    public Deck(String[] ranks, String[] suits, int[] values) {
+        //two-deep for loop to ensure that all fields are assigned correctly
+        for(int i = 0; i < ranks.length; i++){
+            for(int j = 0; j < suits.length; j++){
+                cards.add(new Card(ranks[i], suits[j], values[i]));
+            }
+        }
+        //sets the size variable
+        size = cards.size();
+        //shuffle for good measure
+        shuffle();
+    }
+//checks whether or not the deck is empty
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
+    //shuffles the remaining deck
+    public void shuffle() {
+        for(int k = size - 1; k >= 0; k--) {
+            int rand = (int)(Math.random() * k);
+            Card temp = cards.get(rand);
+            Card swap = cards.get(k);
+            cards.set(rand, swap);
+            cards.set(k, temp);
+        }
+    }
+
+    public Card deal() {
+        if (isEmpty()) {
+            return null;
+        }
+        //takes one off the top in a sense, the actual card isn't removed from the array, but rather the index is moved
+        //so that it might as well have been
+        size--;
+        //returns the new top card
+        return cards.get(size);
+    }
+
+    public String toString() {
+        String deckDescription = "size = " + size + "\nUndealt cards: \n";
+
+        for (int k = size - 1; k >= 0; k--) {
+            deckDescription = deckDescription + cards.get(k);
+            if (k != 0) {
+                deckDescription = deckDescription + ", ";
+            }
+            if ((size - k) % 2 == 0) {
+                deckDescription = deckDescription + "\n";
+            }
+        }
+
+        deckDescription = deckDescription + "\nDealt cards: \n";
+        for (int k = cards.size() - 1; k >= size; k--) {
+            deckDescription = deckDescription + cards.get(k);
+            if (k != size) {
+                deckDescription = deckDescription + ", ";
+            }
+            if ((k - cards.size()) % 2 == 0) {
+                deckDescription = deckDescription + "\n";
+            }
+        }
+
+        deckDescription = deckDescription + "\n";
+        return deckDescription;
+    }
+}
