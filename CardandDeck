@@ -14,8 +14,8 @@ public class Card {
     public String rank() { return rank; }
     public int pointValue() { return pointValue; }
 //checks if the card is equal to another card
-    public boolean matches(Card otherCard) {
-        if(otherCard.suit().equals(this.suit()) && otherCard.rank().equals(this.rank()) && otherCard.pointValue() == this.pointValue())
+    public boolean matches(Card anotherCard) {
+        if(anotherCard.suit().equals(this.suit()) && anotherCard.rank().equals(this.rank()) && anotherCard.pointValue() == this.pointValue())
             return true;
         else
             return false;
@@ -80,30 +80,30 @@ public class Deck {
     }
 
     public String toString() {
-        String deckDescription = "size = " + size + "\nUndealt cards: \n";
+        String deckDes = "size = " + size + "\nUndealt cards: \n";
 
         for (int k = size - 1; k >= 0; k--) {
-            deckDescription = deckDescription + cards.get(k);
+            deckDes = deckDes + cards.get(k);
             if (k != 0) {
-                deckDescription = deckDescription + ", ";
+                deckDes = deckDes + ", ";
             }
             if ((size - k) % 2 == 0) {
-                deckDescription = deckDescription + "\n";
+                deckDes = deckDes + "\n";
             }
         }
 
-        deckDescription = deckDescription + "\nDealt cards: \n";
+        deckDes = deckDes + "\nDealt cards: \n";
         for (int k = cards.size() - 1; k >= size; k--) {
-            deckDescription = deckDescription + cards.get(k);
+            deckDes = deckDes + cards.get(k);
             if (k != size) {
-                deckDescription = deckDescription + ", ";
+                deckDes = deckDes + ", ";
             }
             if ((k - cards.size()) % 2 == 0) {
-                deckDescription = deckDescription + "\n";
+                deckDes = deckDes + "\n";
             }
         }
 
-        deckDescription = deckDescription + "\n";
-        return deckDescription;
+        deckDes = deckDes + "\n";
+        return deckDes;
     }
 }
